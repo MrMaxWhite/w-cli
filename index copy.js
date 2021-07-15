@@ -4,6 +4,8 @@
 
 // 用于处理用户输入的命令，可以自动解析命令和参数
 const program = require('commander')
+// 下载并提取git仓库，如下载上传到git中的模板
+const download = require('download-git-repo')
 // 模板引擎，将用户提交的信息动态填充到文件中
 const handlebars = require('handlebars')
 // 通用的命令行用户界面集合，用于和用户进行交互
@@ -28,20 +30,19 @@ program
     // loading 提示
     const spinner = ora('Downloading the template...').start()
 
-    // git clone模板
-    let exec = require('child_process').exec;
-    let cmd = 'git clone https://github.com/MrMaxWhite/w-cli-template-1';
-    exec(cmd,{ encoding: 'utf-8' },function(error, stdout, stderr) {
-      if (error) {
+    // 下载模板
+    // downloadUrl：仓库地址
+    // projectName：下载路径
+    const { downloadUrl } = templates[templateName]
+    // 如果遇到控制台报错：Error: 'git clone' failed with status 128, 则download不要配置 { clone: true }
+    download(downloadUrl, projectName, (err) => {
+      if (err) {
         spinner.fail()
-        console.log(logSymbols.error, chalk.red(error))
+        console.log(logSymbols.error, chalk.red(err))
         return
       }
 
       spinner.succeed()
-
-      // 重命名文件
-      fs.renameSync(`./w-cli-${templateName}`,`./${projectName}`)
 
       // 使用向导的方式采集用户输入的值
       inquirer.prompt([{
@@ -70,7 +71,7 @@ program
 
         console.log(logSymbols.success, chalk.yellow('初始化模板成功'))
       })
-    });
+    })
   })
 
 program
