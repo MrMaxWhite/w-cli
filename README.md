@@ -10,6 +10,26 @@
 
 4.当模板有变动时，只需要更新github上的模板即可，无需用户更新脚手架
 
+
+## 参考
+0、https://zhuanlan.zhihu.com/p/613490337
+1、https://xie.infoq.cn/article/c8fc6751ef7dd938ba4b2e5e3
+2、https://juejin.cn/post/6844903999758401549
+3、https://www.bilibili.com/video/BV1sx411Z7tN?p=1&vd_source=1a0090997510e21ce87bed18d2025c3b
+
+
+## 初始化项目
+mkdir w-cli
+cd w-cli
+npm init -y
+
+## 涉及依赖包
+commander：命令行处理工具
+inquirer：命令行交互工具
+download-git-repo：git仓库下载工具
+ora：终端loading美化工具
+chalk：命令行输入/输出美化工具
+
 ## 如何生成命令，如在终端执行w-cli
 1、npm init -y  生成package.json
 2、在package.json配置 
